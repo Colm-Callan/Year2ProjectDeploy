@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div>
+    <div>
+        <p><button class="shopping-btn"><a href="{% url 'shop:all_products' %}">Home</a></button> |
+            <button class="shopping-btn"><a href="{{product.category.get_absolute_url }}">{{product.category}}</a></button>
+        </p>
+    </div>
+    <div>
+        <br>
+        <div>
+            <div>
+                <div>
+                    <img class="img" src="{{product.image.url}}" alt="{{product.name}}">
+                </div>
+            </div>
+            <div>
+                <div>
+                    <h1>{{product.name}}</h1>
+                    {% if user.is_loyal %}
+                    <p><del>€{{product.price}}</del> | €{{product.loyal_price}}
+                        {% if product.stock == 0 %}
+                        <b> Out of Stock</b>
+                        {% else %}
+                        <br>
+                        <br>
+                        <button class="shopping-btn"><a href="{% url 'cart:add_cart' product.id %}">Add to
+                                Cart</a></button> |
+                        <button class="shopping-btn"><a href="{% url 'wishlist:add_to_wishlist' product.id %}">Add to
+                                Wishlist</a></button>
+                        {% endif %}
+                    </p>
+                    {% else %}
+                    <p>€{{product.price}}
+                        {% if product.stock == 0 %}
+                        <b>Out of Stock</b>
+                        {% else %}
+                        <br>
+                        <br>
+                        <button class="shopping-btn"><a href="{% url 'cart:add_cart' product.id %}">Add to
+                                Cart</a></button> |
+                        <button class="shopping-btn"><a href="{% url 'wishlist:add_to_wishlist' product.id %}">Add to
+                                Wishlist</a></button>
+                        {% endif %}
+                    </p>
+                    {% endif %}
+
+                    <hr>
+                    <h4>Product Description</h4>
+                    <p>{{product.description}}</p>
+                    <hr>
+                    <h4>Reviews | <button class="shopping-btn"><a href="{% url 'shop:add_review' product.id %}">Add
+                                Review</a></button></h4>
+
+
+                    {% if product_reviews %}
+                    {% for review in product_reviews %}
+                    <div>
+                        <br>
+                        <p><b>{{ review.user }}</b></p>
+                        <p>Rating:
+                            {% if review.rate == 5 %}
+                            <span class="star">&#9733;</span><span class="star">&#9733;</span><span
+                                class="star">&#9733;</span><span class="star">&#9733;</span><span
+                                class="star">&#9733;</span>
+                            {% elif review.rate == 4 %}
+                            <span class="star">&#9733;</span><span class="star">&#9733;</span><span
+                                class="star">&#9733;</span><span class="star">&#9733;</span><span
+                                class="star-shaded">&#9733;</span>
+                            {% elif review.rate == 3 %}
+                            <span class="star">&#9733;</span><span class="star">&#9733;</span><span
+                                class="star">&#9733;</span><span class="star-shaded">&#9733;</span><span
+                                class="star-shaded">&#9733;</span>
+                            {% elif review.rate == 2 %}
+                            <span class="star">&#9733;</span><span class="star">&#9733;</span><span
+                                class="star-shaded">&#9733;</span><span class="star-shaded">&#9733;</span><span
+                                class="star-shaded">&#9733;</span>
+                            {% elif review.rate == 1 %}
+                            <span class="star">&#9733;</span><span class="star-shaded">&#9733;</span><span
+                                class="star-shaded">&#9733;</span><span class="star-shaded">&#9733;</span><span
+                                class="star-shaded">&#9733;</span>
+                            {% elif review.rate == 0 %}
+                            <span class="star-shaded">&#9733;</span><span class="star-shaded">&#9733;</span><span
+                                class="star-shaded">&#9733;</span><span class="star-shaded">&#9733;</span><span
+                                class="star-shaded">&#9733;</span>
+                            {% endif %}
+                            | posted at: {{ review.posted_at }}
+                        </p>
+                        <p>{{ review.comment }}</p>
+                    </div>
+                    {% endfor %}
+
+                    {% else %}
+                    <p>No reviews yet.</p>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <h1>People also buy: </h1>
+    <p></p>
+</div>
+
+<div>
+    <div style="display: flex;">
+        {% for product in products %}
+        <div>
+            <div>
+                <a class="product-img" href="{{product.get_absolute_url}}"><img src="{{product.image.url}}"
+                        alt="{{product.name}}" style="width: 200px;height: auto;"></a>
+                <div>
+                    <h4 class="product-txt">{{product.name}}</h4>
+                    {% if user.is_loyal %}
+                    <p><del>€{{product.price}}</del>| €{{product.loyal_price}}</p>
+                    {% else %}
+                    <p class="product-txt">€{{product.price}}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <br>
+</div>
+{% endblock %}

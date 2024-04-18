@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %} User Profile {% endblock title %}
+{% block content %}
+<div>
+    <h3>Hi {{ user.username }}</h3>
+    <div>
+        <p>Username: {{ user.username }}</p>
+        <p>First Name: {{ user.first_name }}</p>
+        <p>Last Name: {{ user.last_name }}</p>
+        <p>Phone Number: {{ user.phone }}</p>
+        <p>Email: {{ user.email }}</p>
+        <p>Address: {{ user.address }}</p>
+
+        <button class="shopping-btn"><a href="{% url 'password_change' %}">Change password</a></button>
+        <button class="shopping-btn"><a href="{% url 'password_reset' %}">Reset Password</a></button>
+        <form method="post" action="{% url 'user_delete' user.pk %}">
+            {% csrf_token %}
+            <p>Are you sure you want to delete this account?
+                <button class="shopping-btn" type="submit" value="Confirm">Delete</button>
+            </p>
+        </form>
+
+    </div>
+</div>
+{% if user.is_loyal %}
+<h3>You are a loyal customer</h3>
+<p>
+    Enjoy exlcusive offers and keep up to date on our sales or new products
+</p>
+{% else %}
+<div>
+    <h2>Sign Up For Loyalty Status</h2>
+    <div>
+        <form method="post">
+            {% csrf_token %}
+
+            <p>
+                Sign up to be a Loyal Customer, receive weekly newsletter using the email you signed up with
+                and get exclusive offers!
+            </p>
+            <p>
+                The best part is it's Free and takes no time at all. Get your loyal benefits today!
+            </p>
+
+            <br>
+            <p><b>Sign Up Using :</b> {{ user.email }}</p>
+
+            <button class="shopping-btn" type="submit">Yes</button>
+        </form>
+
+        {% if success_message %}
+        <p>{{ success_message }}</p>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+
+{% endblock content %}

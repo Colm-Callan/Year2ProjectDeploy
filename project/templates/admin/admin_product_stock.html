@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+ <h2> Manage Stock Control</h2>
+
+
+    {% for product in product %}
+    <div style="display: flex; flex-wrap: wrap;">
+    <p>
+        {{ product.name }} - {{ product.stock }}
+        <p>&nbsp</p><p>&nbsp</p><p>&nbsp</p><p>&nbsp</p>
+
+   
+        <form action="{% url 'admin_product_stock_add_1' product.id %}" method="post">
+        {% csrf_token %}
+        <button class="shopping-btn" type="submit">+1 stock</button>
+    </form>
+
+<p>&nbsp</p>
+    
+<form action="{% url 'admin_product_stock_add_10' product.id %}" method="post">
+        {% csrf_token %}
+        <button class="shopping-btn" type="submit">+10 stock</button>
+    </form>
+<p>&nbsp</p>
+  
+    <form action="{% url 'admin_product_stock_delete_1' product.id %}" method="post">
+        {% csrf_token %}
+        <button class="shopping-btn" type="submit">-1 stock</button>
+    </form>
+<p>&nbsp</p>
+    
+    <form action="{% url 'admin_product_stock_delete_10' product.id %}" method="post">
+        {% csrf_token %}
+        <button class="shopping-btn" type="submit">-10 stock</button>
+    </form>
+    </p>
+    <p>&nbsp</p>
+   
+</div>
+    {% endfor %}
+    
+
+
+{% endblock content %}

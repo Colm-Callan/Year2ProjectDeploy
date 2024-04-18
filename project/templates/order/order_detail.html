@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div>
+    <div>
+        <br>
+        <h1>Order Details</h1>
+        <br>
+        <div>
+            <b>Order: </b>#{{ order.id }}<br>
+            <b>Date: </b>{{ order.created|date:"d M Y" }}<br>
+            <b>Order Total: </b>€{{ order.total }}<br>
+            <b>Order Status: </b><i class="fas fa-check"></i>
+        </div>
+        <br>
+
+       
+        <table>
+            <tr>
+                <td><h3>Billing</h3></td>
+                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>                
+                <td><h3>Shipping</h3></td>
+            
+                
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td><b>Billing Name: </b>{{ order.billingName }}</td>
+                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td><b>Shipping Name: </b>{{ order.shippingName }}</td>
+            </tr>
+            <tr>
+                <td><b>Address: </b> {{ order.billingAddress1 }}</td>
+                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td><b>Address: </b> {{ order.shippingAddress1 }}</td>
+            </tr>
+            <tr>
+                <td><b>City: </b>{{ order.billingCity }}</td>
+                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td><b>City: </b>{{ order.shippingCity }}</td>
+            </tr>
+            <tr>
+                <td><b>Country: </b>{{ order.billingCountry }}</td>
+                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td><b>Country: </b>{{ order.shippingCountry }}</td>
+            </tr>
+            
+        </table>
+
+        <br>
+        <br>
+
+        <table>
+            <tr>
+                <td><b>Product Description</b></td>
+                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td><b>Qty</b></td>
+                <td></td><td></td><td></td><td></td><td></td>
+                <td><b>Unit Price</b></td>
+                <td></td><td></td><td></td><td></td><td></td>
+                <td><b>Sub-Total</b></td>
+            </tr>
+            {% for item in order_items %}
+            <tr>
+                <td>{{ item.product }}</td>
+                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td>{{ item.quantity }}</td>
+                <td></td><td></td><td></td><td></td><td></td>
+                <td>€{{ item.price }}</td>
+                <td></td><td></td><td></td><td></td><td></td>
+                <td>€{{ item.sub_total }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <hr>
+        
+        <div> <p><b>Total</b> €{{ order.total }}</p></div>
+        <hr>
+
+
+
+    </div>
+</div>
+{% endblock content %}

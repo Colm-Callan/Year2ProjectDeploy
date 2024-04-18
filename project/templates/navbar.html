@@ -1,0 +1,67 @@
+{% load static %}
+<html>
+
+<head>
+    <title>My Django Website</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <a class="navbar_text" href="{% url 'home' %}">Furniture Store</a>
+
+        <a class="navbar_text" href="{% url 'shop:all_products' %}">All Products</a>
+
+        <div class="dropdown navbar_text">
+            <button class="dropbtn">Rooms</button>
+            <div class="dropdown-content">
+                <a href="{% url 'shop:bedroom' %}">Bedroom</a>
+                <a href="{% url 'shop:living_room' %}">Living Room</a>
+                <a href="{% url 'shop:kitchen' %}">Kitchen</a>
+                <a href="{% url 'shop:bathroom' %}">Bathroom</a>
+                <a href="{% url 'shop:garden' %}">Garden</a>
+            </div>
+        </div>
+
+
+        <div class="dropdown navbar_text">
+            <button class="dropbtn">Account</button>
+            <div class="dropdown-content">
+                {% if user.is_authenticated %}
+                {% if user.is_superuser %}
+                <a class="navbar_text" href="{% url 'shop:product_create' %}">Add Product</a>
+                <a class="navbar_text" href="{% url 'admin_user_list' %}">User List</a>
+                <a class="navbar_text" href="{% url 'admin_product_stock' %}">Product stock List</a>
+
+
+                <hr>
+                {% endif %}
+
+                <a class="navbar_text" href="{% url 'user_profile' request.user.pk %}">User profile</a>
+                <a class="navbar_text" href="{% url 'order:order_history' %}">Order History</a>
+
+                <form action="{% url 'logout' %}" method="post">{% csrf_token %}<button class="navbar-logout" type="submit">Log out</button>
+                </form>
+                {% else %}
+                <a href="{% url 'login' %}">Log In</a>
+                <a href="{% url 'signup' %}">Sign up</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <a class="navbar_text" href="{% url 'cart:cart_detail' %}">Cart</a>
+        <a class="navbar_text" href="{% url 'wishlist:wishlist_detail' %}">Wishlist</a>
+    
+        <form class="search-input" action="{% url 'searchApp:searchResult' %}" method="get">
+            <input id="search-bar" type="text" placeholder="Search..." aria-label="Search" name="q">
+            <button class="search-button" type="submit">Search</button>
+        </form>
+    
+    </div>
+
+    <script src="{% static 'autocomplete.js' %}"></script>
+</body>
+
+</html>

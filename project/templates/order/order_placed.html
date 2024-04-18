@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Order Succcessful {% endblock title %}
+{% block content %}
+<div>
+    <div>
+        <br>
+        <br>
+        <h1>Thanks for placing your order</h1>
+        <hr>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div >
+            <p>Your order number is: <b>{{ customer_order.id }}</b></p>
+            <br>
+            <br>
+            <p>
+                We have received your order and will begin processing right
+                away. For your records, an email confirmation has been sent to you. It contains details of the items you
+                purchased.
+            </p>
+<br>
+            <div>
+                <button class="shopping-btn"><a href="{% url 'shop:all_products' %}">Continue Shopping</a></button>
+                <button class="shopping-btn"><a href="{% url 'order:order_history' %}">Order History</a></button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<div>
+    <h1>People also buy: </h1>
+    <p></p>
+</div>
+
+<div>
+    <div style="display: flex;">
+        {% for product in products %}
+        <div>
+            <div>
+                <a class="product-img" href="{{product.get_absolute_url}}"><img src="{{product.image.url}}" alt="{{product.name}}" style="width: 200px;height: auto;"></a>
+                <div>
+                    <h4 class="product-txt">{{product.name}}</h4>
+                    {% if user.is_loyal %}
+                    <p><del>€{{product.price}}</del>| €{{product.loyal_price}}</p>
+                    {% else %}
+                    <p class="product-txt">€{{product.price}}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <br>
+</div>
+{% endblock %}

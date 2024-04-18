@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+
+<h1 class="room-title">Garden</h1>
+
+<div class="furniture-type-placement" >
+    {% for cat in links %}
+    {% if cat.room == 'garden' %}
+    <a class="furniture-type-txt" href="{{cat.get_absolute_url}}"><h4>{{cat.name}}</h4></a>
+    {% else%}
+    {% endif%}
+    {% endfor %}
+</div>
+
+<div class="room-icons">
+    {% for cat in links %}
+    {% if cat.room == 'garden' %}
+    <a href="{{cat.get_absolute_url}}"><img class="icon-img" src="{{cat.image.url}}" alt="{{cat.name}}"></a>
+    {% else%}
+    {% endif%}
+    {% endfor %}
+</div>
+
+</form>
+
+
+
+{% endblock content %}

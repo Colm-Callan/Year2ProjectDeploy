@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<div>
+    <h1>Welcome</h1>
+<br>
+    <h3>Hi {{user.username }}</h3>
+    <button class="shopping-btn"><a href="{% url 'user_profile' request.user.pk %}">User profile</a></button>
+    <br>
+    <br>
+    <form action="{% url 'logout' %}" method="post">{% csrf_token %}<button class="shopping-btn" id="logoutButton" type="submit">Log out</button></form>
+
+
+
+
+    {% else %}
+    <br>
+    <div >
+        <div>
+            <h3>You are not logged in </h3>
+
+            <p>Please Login or Signup for free.</p>
+            <br>
+            <button class="shopping-btn"><a href="{% url 'login' %}">Log In</a></button>
+            <button class="shopping-btn"><a href="{% url 'signup' %}">Sign up</a></button>
+        </div>
+    </div>
+</div>
+
+{% endif %}
+
+{% endblock content %}

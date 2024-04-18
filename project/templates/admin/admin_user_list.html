@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div style="display: flex;">
+    <ul>
+        {% for user in users %}
+            <li>
+                {{ user.username }} - {{ user.email }} - {{ user.address }} - {{ user.phone }}
+                <form action="{% url 'admin_user_delete' user.id %}" method="post">
+                    {% csrf_token %}
+                    <input class="shopping-btn" type="submit" value="Delete">
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock content %}

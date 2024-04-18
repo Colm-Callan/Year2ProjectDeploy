@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+
+{% block content %}
+{% if not wishlist_items %}
+<div>
+    <div>
+        <br>
+        <h1>
+            Your wishlist is empty
+        </h1>
+        <br>
+        <button class="shopping-btn"><a href="{% url 'shop:all_products' %}">Continue Shopping</a></button>
+    </div>
+</div>
+{% else %}
+<div>
+    <br>
+    <h1 class="homepage_title">
+        Your wishlist
+    </h1>
+    <hr>
+    <br>
+</div>
+<div class="text_margin">
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="5">
+                        Your items
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for wishlist_item in wishlist_items %}
+                <tr>
+                    <td>
+                        <a href="{{wishlist_item.product.get_absolute_url}}">
+                    </td>
+                    <div class="text_margin">
+                        <td>
+                            {{wishlist_item.product.name}}
+                            <br>
+                            Unit Price: €{{ wishlist_item.product.price }}
+                            <button class="shopping-btn"><a
+                                    href="{% url 'wishlist:remove_from_wishlist' wishlist_item.product_id %}"
+                                    >Remove from Wishlist</a></button>
+                            <br>
+                        </td>
+                    </div>
+                    <td>
+                        <br>
+                    </td>
+                </tr>
+                {% endfor %}
+                <br>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
